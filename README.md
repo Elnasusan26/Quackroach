@@ -13,7 +13,7 @@
 - Member 2: Elna Susan - Albertian Institute of Science and Technology
 
 ### Hosted Project Link
-[mention your project hosted link here]
+https://endura-phi.vercel.app/
 
 ### Project Description
 Endura is a private, encrypted digital legacy platform that helps individuals securely store their financial assets, digital accounts, legal documents, and personal wishes — and ensures they're handed over to the right person at the right time, automatically.
