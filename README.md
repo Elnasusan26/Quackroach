@@ -32,8 +32,6 @@ Endura gives users a secure, guided vault to document all their assets, accounts
 
 **For Software:**
 - **Languages:** Python, JavaScript, HTML, CSS
-- **Frameworks:** Django (backend), Vue.js (frontend)
-- **Database:** SQLite3
 - **Libraries:** Django REST Framework, Axios, Vue Router, Pinia, ReportLab (PDF generation)
 - **Tools:** VS Code, Git, Postman, pip, npm
 - **Security:** AES Encryption for all vault data, document-verified death confirmation
@@ -125,40 +123,11 @@ npm run dev
 
 https://github.com/user-attachments/assets/66205ea5-550b-4197-96cb-3369426b0d6f
 
-
----
-
-## AI Tools Used (Optional - For Transparency Bonus)
-
-If you used AI tools during development, document them here for transparency:
-
-**Tool Used:** [e.g., GitHub Copilot, v0.dev, Cursor, ChatGPT, Claude]
-
-**Purpose:** [What you used it for]
-- Example: "Generated boilerplate React components"
-- Example: "Debugging assistance for async functions"
-- Example: "Code review and optimization suggestions"
-
-**Key Prompts Used:**
-- "Create a REST API endpoint for user authentication"
-- "Debug this async function that's causing race conditions"
-- "Optimize this database query for better performance"
-
-**Percentage of AI-generated code:** [Approximately X%]
-
-**Human Contributions:**
-- Architecture design and planning
-- Custom business logic implementation
-- Integration and testing
-- UI/UX design decisions
-
-*Note: Proper documentation of AI usage demonstrates transparency and earns bonus points in evaluation!*
-
 ---
 
 ## Team Contributions
 
-- Sherya Shajalan: builded main features and other features
+- Sherya Shajalan: Builded main features and other features
 - Elna Susan: UI/UX designing and basic implementaion of it and other features
 
 ---
