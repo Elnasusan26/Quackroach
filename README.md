@@ -10,7 +10,7 @@
 
 ### Team Members
 - Member 1: Shreya Sajalan - Albertian Institute of Science and Technology
-- Member 2: Elna Susan] - Albertian Institute of Science and Technology
+- Member 2: Elna Susan - Albertian Institute of Science and Technology
 
 ### Hosted Project Link
 [mention your project hosted link here]
