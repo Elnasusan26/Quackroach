@@ -89,29 +89,13 @@ npm run dev
 
 #### Screenshots (Add at least 3)
 
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
-
----
-
-#### Build Photos
-
-![Team](Add photo of your team here)
-
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
+![WhatsApp Image 2026-02-28 at 9 39 17 PM (1)](https://github.com/user-attachments/assets/89645d86-5186-4ce9-9cd0-77cd75ad6010)
+![WhatsApp Image 2026-02-28 at 9 39 17 PM](https://github.com/user-attachments/assets/e8510cc8-32eb-44e2-88e8-605854af11a5)
+![WhatsApp Image 2026-02-28 at 9 39 16 PM (2)](https://github.com/user-attachments/assets/38b325f9-d698-47d1-bd16-672fb59888dc)
+![WhatsApp Image 2026-02-28 at 9 39 16 PM (1)](https://github.com/user-attachments/assets/8f93de07-a09f-4129-b5e7-548c5f70df3d)
+![WhatsApp Image 2026-02-28 at 9 39 16 PM](https://github.com/user-attachments/assets/13ac82fc-1a30-49f6-82d6-3e26ce9d587e)
+![WhatsApp Image 2026-02-28 at 9 39 15 PM (1)](https://github.com/user-attachments/assets/d5c9f4ff-a077-42a7-bd46-8fbe45f72631)
+![WhatsApp Image 2026-02-28 at 9 39 15 PM](https://github.com/user-attachments/assets/b68ee457-fa65-4d2c-afbf-cdfd99e745e4)
 
 ---
 
@@ -141,9 +125,6 @@ npm run dev
 
 https://github.com/user-attachments/assets/66205ea5-550b-4197-96cb-3369426b0d6f
 
-
-### Additional Demos
-[Add any extra demo materials/links - Live site, APK download, online demo, etc.]
 
 ---
 
@@ -177,9 +158,8 @@ If you used AI tools during development, document them here for transparency:
 
 ## Team Contributions
 
-- [Name 1]: [Specific contributions - e.g., Frontend development, API integration, etc.]
-- [Name 2]: [Specific contributions - e.g., Backend development, Database design, etc.]
-- [Name 3]: [Specific contributions - e.g., UI/UX design, Testing, Documentation, etc.]
+- Sherya Shajalan: builded main features and other features
+- Elna Susan: UI/UX designing and basic implementaion of it and other features
 
 ---
 
