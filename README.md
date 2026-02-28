@@ -150,9 +150,9 @@ npm run dev
 ## Project Demo
 
 ### Video
-[Add your demo video link here - YouTube, Google Drive, etc.]
 
-*Explain what the video demonstrates - key features, user flow, technical highlights*
+https://github.com/user-attachments/assets/66205ea5-550b-4197-96cb-3369426b0d6f
+
 
 ### Additional Demos
 [Add any extra demo materials/links - Live site, APK download, online demo, etc.]
