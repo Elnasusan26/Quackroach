@@ -1,25 +1,21 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+from django.utils import timezone
+from django.utils.html import format_html
+from datetime import timedelta
 from .models import Vault, Letter, Executor
 
 User = get_user_model()
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    # The columns shown on the main user list page
-    list_display = ('email', 'full_name', 'is_staff', 'is_active', 'date_joined')
-    
-    # Adds a search bar to find users by email or name
+    # Updated list_display to include our new custom method
+    list_display = ('email', 'full_name', 'is_staff', 'is_active', 'check_in_status', 'date_joined')
     search_fields = ('email', 'full_name')
-    
-    # Adds a filter sidebar
     list_filter = ('is_staff', 'is_superuser', 'is_active')
-    
-    # Default ordering
     ordering = ('-date_joined',)
     
-    # Customizing the edit page to include 'full_name'
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal Info', {'fields': ('full_name',)}),
@@ -27,7 +23,6 @@ class CustomUserAdmin(UserAdmin):
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
     
-    # Required for UserAdmin to use email as the main ID
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -35,8 +30,33 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 
-# --- Registering Legacy Models ---
+    def check_in_status(self, obj):
+        """
+        Highlights the last login status. 
+        Red if inactive > 30 days, Green if active.
+        """
+        last_seen = obj.last_login or obj.date_joined
+        if not last_seen:
+            return "No Data"
+        
+        limit = timezone.now() - timedelta(days=30)
+        formatted_date = last_seen.strftime("%b %d, %Y")
+        
+        if last_seen < limit:
+            # Return red text for inactive users
+            return format_html(
+                '<span style="color: #f87171; font-weight: bold;">{} (Inactive)</span>',
+                formatted_date
+            )
+        # Return green for active users
+        return format_html(
+            '<span style="color: #4ade80;">{} (Active)</span>',
+            formatted_date
+        )
 
+    check_in_status.short_description = 'Last Check-in'
+
+# --- Legacy Models ---
 @admin.register(Vault)
 class VaultAdmin(admin.ModelAdmin):
     list_display = ('user', 'item_count', 'updated_at')
