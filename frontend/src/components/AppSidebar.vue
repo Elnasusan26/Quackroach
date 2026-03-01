@@ -33,10 +33,14 @@
           <span class="font-medium text-sm">Letters</span>
         </router-link>
         
-        <a href="#" class="flex items-center space-x-3 text-gray-400 hover:text-white hover:bg-[#12141c] px-4 py-3 rounded-xl transition-colors">
+        <router-link 
+          to="/executor" 
+          class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-colors text-gray-400 hover:text-white hover:bg-[#12141c]"
+          exact-active-class="bg-[#1A1A1A] text-[#E5B869] hover:text-[#E5B869]"
+        >
           <ion-icon name="person-outline" class="text-xl"></ion-icon>
           <span class="font-medium text-sm">Executor</span>
-        </a>
+        </router-link>
       </nav>
     </div>
 

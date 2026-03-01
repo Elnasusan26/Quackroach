@@ -117,3 +117,33 @@ class LetterView(APIView):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ExecutorView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # Look for the executor assigned to the logged-in user
+            executor = Executor.objects.get(user=request.user)
+            return Response({
+                "name": executor.name,
+                "email": executor.email,
+                "status": executor.status,
+                "relationship": executor.relationship
+            })
+        except Executor.DoesNotExist:
+            # Return 404 so the frontend knows to show the "Assign" form
+            return Response({"message": "No executor assigned"}, status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request):
+        # update_or_create ensures one user only has one executor
+        executor, created = Executor.objects.update_or_create(
+            user=request.user,
+            defaults={
+                "name": request.data.get('name'),
+                "email": request.data.get('email'),
+                "phone": request.data.get('phone'),
+                "relationship": request.data.get('relationship'),
+            }
+        )
+        return Response({"message": "Executor assigned successfully"}, status=status.HTTP_201_CREATED)

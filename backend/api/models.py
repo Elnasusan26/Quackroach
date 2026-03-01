@@ -83,15 +83,16 @@ class Letter(models.Model):
         return f"Letter: {self.title} (by {self.user.email})"
 
 class Executor(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    relationship = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=20)
+    relationship = models.CharField(max_length=100)
     
-    # Status can be 'Pending', 'Active', or 'Declined'
-    status = models.CharField(max_length=50, default='Pending') 
+    # Statuses: 'Active' (Alive), 'Verification_Pending' (Triggered), 'Access_Granted' (Confirmed)
+    status = models.CharField(max_length=50, default='Active') 
+    is_verified = models.BooleanField(default=False) 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Executor: {self.name} for {self.user.email}"
+        return f"Executor {self.name} for {self.user.email}"

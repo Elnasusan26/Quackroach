@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
+from .models import Vault, Letter, Executor
 
 User = get_user_model()
 
 @admin.register(User)
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     # The columns shown on the main user list page
-    list_display = ('email', 'full_name', 'is_staff', 'is_superuser', 'is_active', 'date_joined')
+    list_display = ('email', 'full_name', 'is_staff', 'is_active', 'date_joined')
     
     # Adds a search bar to find users by email or name
     search_fields = ('email', 'full_name')
@@ -14,29 +16,38 @@ class CustomUserAdmin(admin.ModelAdmin):
     # Adds a filter sidebar
     list_filter = ('is_staff', 'is_superuser', 'is_active')
     
-    # Default ordering (newest users first)
+    # Default ordering
     ordering = ('-date_joined',)
     
-    # Grouping the fields nicely on the user edit page
+    # Customizing the edit page to include 'full_name'
     fieldsets = (
-        ('Login Credentials', {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password')}),
         ('Personal Info', {'fields': ('full_name',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    
+    # Required for UserAdmin to use email as the main ID
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password', 'full_name'),
+        }),
     )
 
-    def save_model(self, request, obj, form, change):
-        """
-        This is a crucial step for custom user models. 
-        It ensures that if you type a new password in the admin panel, 
-        Django actually encrypts/hashes it before saving it to the database.
-        """
-        if obj.pk:
-            # Updating an existing user: Check if the password was changed
-            orig_obj = User.objects.get(pk=obj.pk)
-            if obj.password != orig_obj.password:
-                obj.set_password(obj.password)
-        else:
-            # Creating a brand new user: Hash the plain-text password
-            obj.set_password(obj.password)
-            
-        super().save_model(request, obj, form, change)
+# --- Registering Legacy Models ---
+
+@admin.register(Vault)
+class VaultAdmin(admin.ModelAdmin):
+    list_display = ('user', 'item_count', 'updated_at')
+    readonly_fields = ('ciphertext', 'iv', 'salt')
+
+@admin.register(Letter)
+class LetterAdmin(admin.ModelAdmin):
+    list_display = ('recipient', 'user', 'created_at')
+    readonly_fields = ('ciphertext', 'iv', 'salt')
+
+@admin.register(Executor)
+class ExecutorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'relationship', 'user', 'status', 'is_verified')
+    list_editable = ('status', 'is_verified')

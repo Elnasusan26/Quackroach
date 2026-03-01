@@ -1,60 +1,116 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
-// Mock data to visualize the layout before we connect your Django backend
-const executors = ref([
-  { id: 1, name: 'Jane Doe', email: 'jane.doe@example.com', relationship: 'Spouse', status: 'Active' },
-  { id: 2, name: 'John Smith', email: 'john.smith@example.com', relationship: 'Attorney', status: 'Pending Invitation' }
-])
+const executor = ref(null)
+const formData = ref({
+  name: '',
+  email: '',
+  phone: '',
+  relationship: ''
+})
+const isLoading = ref(true)
+const isSaving = ref(false)
+
+const fetchExecutor = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const res = await axios.get('http://127.0.0.1:8000/api/executor/', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    executor.value = res.data
+  } catch (e) {
+    executor.value = null
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const handleAssign = async () => {
+  isSaving.value = true
+  try {
+    const token = localStorage.getItem('access_token')
+    await axios.post('http://127.0.0.1:8000/api/executor/', formData.value, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    await fetchExecutor()
+  } catch (e) {
+    console.error("Assignment failed", e)
+  } finally {
+    isSaving.value = false
+  }
+}
+
+onMounted(fetchExecutor)
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8 max-w-5xl">
-    
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-      <div>
-        <h1 class="text-3xl font-bold tracking-tight">Trusted Executors</h1>
-        <p class="text-muted-foreground mt-2">Manage the people authorized to access your AfterMe vault.</p>
-      </div>
-      <button class="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md font-medium text-sm transition-colors">
-        Add New Executor
-      </button>
-    </div>
+  <div class="container mx-auto px-4 py-8 max-w-4xl mt-10">
+    <header class="mb-12">
+      <h2 class="text-4xl font-serif font-bold text-white mb-2">The Executor</h2>
+      <p class="text-gray-400 text-lg">The one person who will bridge the gap between your life and your legacy.</p>
+    </header>
 
-    <div class="border rounded-lg bg-card text-card-foreground shadow-sm">
-      <div class="p-6">
-        
-        <div v-if="executors.length === 0" class="text-center py-10 text-muted-foreground">
-          You haven't added any executors yet.
-        </div>
-        
-        <div v-else class="space-y-4">
-          <div 
-            v-for="executor in executors" 
-            :key="executor.id" 
-            class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-md gap-4"
-          >
+    <div v-if="isLoading" class="text-center py-20 text-gray-500">Loading system status...</div>
+
+    <div v-else>
+      <div v-if="executor" class="bg-[#12141c] border border-gray-800 rounded-3xl p-8 shadow-xl">
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-full bg-[#E5B869]/10 flex items-center justify-center text-[#E5B869]">
+              <ion-icon name="person-outline" class="text-3xl"></ion-icon>
+            </div>
             <div>
-              <h3 class="font-medium text-lg">{{ executor.name }}</h3>
-              <p class="text-sm text-muted-foreground">{{ executor.email }} • {{ executor.relationship }}</p>
+              <h3 class="text-2xl font-bold text-white">{{ executor.name }}</h3>
+              <p class="text-[#E5B869] font-medium">{{ executor.relationship }}</p>
             </div>
-            
-            <div class="flex items-center gap-4">
-              <span :class="[
-                'px-2.5 py-0.5 rounded-full text-xs font-semibold',
-                executor.status === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-              ]">
-                {{ executor.status }}
-              </span>
-              <button class="text-sm text-red-500 hover:text-red-700 font-medium transition-colors">
-                Remove
-              </button>
-            </div>
+          </div>
+          <div class="px-4 py-1 rounded-full border border-green-500/30 bg-green-500/10 text-green-500 text-sm font-bold">
+            System: {{ executor.status }}
           </div>
         </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="p-4 bg-black/40 rounded-xl border border-gray-800">
+            <p class="text-xs text-gray-500 uppercase mb-1">Email Address</p>
+            <p class="text-white">{{ executor.email }}</p>
+          </div>
+          <div class="p-4 bg-black/40 rounded-xl border border-gray-800">
+            <p class="text-xs text-gray-500 uppercase mb-1">Access Level</p>
+            <p class="text-red-400">Zero Access (Until Verified)</p>
+          </div>
+        </div>
+
+        <div class="p-6 bg-red-900/10 border border-red-900/20 rounded-2xl">
+          <p class="text-sm text-gray-400 leading-relaxed">
+            <ion-icon name="shield-half-outline" class="mr-1"></ion-icon>
+            <strong>Privacy Guard:</strong> Your executor cannot see your Vault items or read your Legacy Letters. Access is only granted after our verification team confirms a legal death certificate or 6 months of inactivity.
+          </p>
+        </div>
+      </div>
+
+      <div v-else class="max-w-2xl mx-auto bg-[#12141c] border border-gray-800 rounded-3xl p-8 shadow-xl">
+        <h3 class="text-2xl font-bold text-white mb-6">Assign Your Executor</h3>
+        <form @submit.prevent="handleAssign" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-400 mb-1">Legal Full Name</label>
+            <input v-model="formData.name" type="text" class="w-full p-3 bg-black border border-gray-800 rounded-lg text-white" required />
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm text-gray-400 mb-1">Email Address</label>
+              <input v-model="formData.email" type="email" class="w-full p-3 bg-black border border-gray-800 rounded-lg text-white" required />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-1">Relationship</label>
+              <input v-model="formData.relationship" type="text" placeholder="e.g. Spouse, Lawyer" class="w-full p-3 bg-black border border-gray-800 rounded-lg text-white" required />
+            </div>
+          </div>
+          <button type="submit" :disabled="isSaving" class="w-full bg-[#E5B869] text-black font-bold py-4 rounded-xl mt-4 transition hover:scale-[1.01] shadow-lg">
+            {{ isSaving ? 'Securing Relationship...' : 'Nominate Executor' }}
+          </button>
+        </form>
       </div>
     </div>
-    
   </div>
 </template>
