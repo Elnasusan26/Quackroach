@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .email-container { font-family: 'Georgia', serif; color: #1a1a1a; line-height: 1.6; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; }
+        .header { background-color: #12141c; padding: 40px; text-align: center; }
+        .logo { color: #E5B869; font-size: 28px; font-weight: bold; letter-spacing: 2px; }
+        .content { padding: 40px; background-color: #ffffff; }
+        .footer { background-color: #f9f9f9; padding: 20px; text-align: center; font-size: 12px; color: #888; }
+        .button { background-color: #E5B869; color: #000000; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; margin-top: 20px; }
+        .notice { border-left: 4px solid #E5B869; padding-left: 20px; font-style: italic; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">ENDURA</div>
+        </div>
+        <div class="content">
+            <h2 style="color: #12141c;">Notice of Protocol Initiation</h2>
+            <p>Dear {{ executor_name }},</p>
+            <p>You are receiving this formal notification because you have been designated as the <strong>Trusted Executor</strong> for the estate of <strong>{{ user_name }}</strong>.</p>
+            
+            <p class="notice">
+                The Endura Legacy System has detected a period of prolonged inactivity on this account, exceeding the established safety threshold. In accordance with the owner's instructions, we are now initiating the preliminary verification phase.
+            </p>
+
+            <p><strong>What this means:</strong><br>
+            Access to the secure vault and legacy letters has <u>not</u> been granted yet. As part of our security protocol, you must now verify your identity and provide the necessary documentation to proceed.</p>
+
+            <div style="text-align: center;">
+                <a href="{{ site_url }}/executor-portal" class="button">Access Executor Portal</a>
+            </div>
+
+            <p style="margin-top: 30px;">If you believe this notification has been sent in error, please contact our support team immediately.</p>
+            <p>Respectfully,<br>The Endura Security Team</p>
+        </div>
+        <div class="footer">
+            &copy; 2026 Endura Digital Legacy Systems. All rights reserved.<br>
+            Secure. Private. Forever.
+        </div>
+    </div>
+</body>
+</html>

@@ -1,8 +1,8 @@
 <template>
   <aside class="w-64 bg-[#090A0F] border-r border-gray-800 flex flex-col justify-between">
     <div>
-      <div class="p-8">
-        <h1 class="text-3xl font-bold text-[#E5B869] font-serif tracking-wide">Endura</h1>
+      <div class="p-8 mt-20">
+        <h1 class="text-lg font-bold text-[#E5B869] font-serif tracking-wide">Overview</h1>
       </div>
       
       <nav class="space-y-2 px-4">
@@ -33,10 +33,14 @@
           <span class="font-medium text-sm">Letters</span>
         </router-link>
         
-        <a href="#" class="flex items-center space-x-3 text-gray-400 hover:text-white hover:bg-[#12141c] px-4 py-3 rounded-xl transition-colors">
+        <router-link 
+          to="/executor" 
+          class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-colors text-gray-400 hover:text-white hover:bg-[#12141c]"
+          exact-active-class="bg-[#1A1A1A] text-[#E5B869] hover:text-[#E5B869]"
+        >
           <ion-icon name="person-outline" class="text-xl"></ion-icon>
           <span class="font-medium text-sm">Executor</span>
-        </a>
+        </router-link>
       </nav>
     </div>
 
@@ -50,5 +54,5 @@
 </template>
 
 <script setup>
-// No logic needed here right now!
+
 </script>
