@@ -1,8 +1,8 @@
 <template>
   <aside class="w-64 bg-[#090A0F] border-r border-gray-800 flex flex-col justify-between">
     <div>
-      <div class="p-8">
-        <h1 class="text-3xl font-bold text-[#E5B869] font-serif tracking-wide">Endura</h1>
+      <div class="p-8 mt-20">
+        <h1 class="text-lg font-bold text-[#E5B869] font-serif tracking-wide">Overview</h1>
       </div>
       
       <nav class="space-y-2 px-4">
@@ -50,5 +50,5 @@
 </template>
 
 <script setup>
-// No logic needed here right now!
+
 </script>

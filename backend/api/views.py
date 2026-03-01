@@ -9,6 +9,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
+from .models import Vault
+from .serializers import VaultSerializer
+from rest_framework.views import APIView
 
 User = get_user_model()
 
@@ -80,3 +84,28 @@ def dashboard_stats(request):
         "hasExecutor": "Yes" if has_exec else "No",
         "lastCheckIn": last_check_in
     })
+
+class VaultView(APIView):
+    permission_classes = [IsAuthenticated] # Bouncer is active
+
+    def get(self, request):
+        try:
+            vault = Vault.objects.get(user=request.user)
+            serializer = VaultSerializer(vault)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Vault.DoesNotExist:
+            # If the user is new and hasn't saved anything yet, return a clean empty state
+            return Response({"message": "Vault not initialized"}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        # Fetch the existing vault, or create a blank one if it's their first time
+        vault, created = Vault.objects.get_or_create(user=request.user)
+        
+        # Pass the instance to the serializer so it UPDATES instead of duplicating
+        serializer = VaultSerializer(vault, data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

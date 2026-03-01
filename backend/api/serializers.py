@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from .models import Vault
 
 User = get_user_model()
 
@@ -19,3 +20,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             full_name=validated_data.get('full_name', '')
         )
         return user
+    
+class VaultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vault
+        fields = ["ciphertext", "iv", "salt"]
