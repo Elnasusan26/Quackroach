@@ -128,7 +128,6 @@ const handleUnlock = async () => {
     const decryptedData = await decryptVault(vaultPassword.value, encryptedPayload.value)
     
     // Assign decrypted data to our reactive array
-    // We expect the schema to have an "items" array for this UI
     vaultItems.value = decryptedData.items || []
     
     isLocked.value = false
@@ -148,7 +147,6 @@ const handleSetup = async () => {
   }
 
   try {
-    // This matches the exact placeholder data from your original UI template
     const initialData = {
       items: [
         { id: 1, title: 'Chase Savings', type: 'Bank', details: '•••• 4829', value: '$24,500', icon: 'business-outline' },
@@ -181,7 +179,7 @@ const handleSetup = async () => {
       <div class="bg-card border shadow-xl rounded-2xl p-8 max-w-md w-full text-center">
         
         <div class="bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <ion-icon name="lock-closed-outline" class="text-3xl"></ion-icon>
         </div>
 
         <h2 class="text-2xl font-bold mb-2">
@@ -220,11 +218,12 @@ const handleSetup = async () => {
         </header>
         
         <div class="flex items-center gap-4">
-          <button @click="isLocked = true" class="text-sm font-medium text-red-400 hover:text-red-300 transition-colors">
+          <ion-icon name="lock-closed"></ion-icon>
+          <button @click="isLocked = true" class="text-lg font-medium text-red-400 hover:text-red-300 transition-colors">
             Lock Vault
           </button>
-          <button class="bg-[#E5B869] hover:bg-[#d0a75d] text-black font-semibold py-3 px-6 rounded-xl flex items-center space-x-2 transition-transform hover:scale-105 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <button @click="router.push('/addvault')" class="bg-[#E5B869] hover:bg-[#d0a75d] text-black font-semibold py-3 px-6 rounded-xl flex items-center space-x-2 transition-transform hover:scale-105 shadow-lg">
+            <ion-icon name="add-outline" class="text-xl"></ion-icon>
             <span>Add New</span>
           </button>
         </div>
@@ -240,7 +239,7 @@ const handleSetup = async () => {
           <div class="flex items-start space-x-4">
             <div class="bg-[#1A1C23] p-3 rounded-xl text-[#E5B869] flex items-center justify-center">
               <ion-icon v-if="item.icon" :name="item.icon" class="text-2xl"></ion-icon>
-              <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <ion-icon v-else name="folder-outline" class="text-2xl"></ion-icon>
             </div>
             
             <div>
